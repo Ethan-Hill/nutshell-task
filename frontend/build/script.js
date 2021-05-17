@@ -92,7 +92,25 @@ switch (pathArray[pathArray.length - 1]) {
         displayRecipe(data)
       })
       .catch((error) => console.error("FETCH ERROR:", error))
-    break       
+    break
+  case "search.html":
+    fetch(`http://localhost:3000/api/recipes`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        } else {
+          throw new Error("No recipe found")
+        }
+      })
+      .then((data) => {
+        const refinedArr = data.filter((recipe) => {
+          return recipe.title.toLowerCase().includes(Search)
+        })
+        console.log(refinedArr)
+        displayRecipes(refinedArr)
+      })
+      .catch((error) => console.error("FETCH ERROR:", error))
+    break
 }
 
 function displayRecipes(data) {
