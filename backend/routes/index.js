@@ -55,4 +55,18 @@ router.get("/recipes/desserts", (req, res) => {
   res.send(desserts)
 })
 
+router.get("/recipes/:id", (req, res) => {
+  dir = path.join(__dirname, "../data/")
+  const data = fs
+    .readdirSync(dir)
+    .filter((name) => path.extname(name) === ".json")
+    .map((name) => require(path.join(dir, name)))
+
+  if (data[req.params.id]) {
+    res.send([data[req.params.id]])
+  } else {
+    res.status(404).send("Recipe not found")
+  }
+})
+
 module.exports = router
