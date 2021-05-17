@@ -27,4 +27,18 @@ router.get("/recipes/mains", (req, res) => {
   res.send(mains)
 })
 
+router.get("/recipes/appetizers", (req, res) => {
+  dir = path.join(__dirname, "../data/")
+  const data = fs
+    .readdirSync(dir)
+    .filter((name) => path.extname(name) === ".json")
+    .map((name) => require(path.join(dir, name)))
+
+  const appetizers = data.filter((dish) => {
+    return dish.tags.includes("appetizer")
+  })
+
+  res.send(appetizers)
+})
+
 module.exports = router
