@@ -57,7 +57,21 @@ switch (pathArray[pathArray.length - 1]) {
         displayRecipes(data)
       })
       .catch((error) => console.error("FETCH ERROR:", error))
-    break   
+    break
+  case "desserts.html":
+    fetch("http://localhost:3000/api/recipes/desserts")
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        } else {
+          throw new Error("No recipe found")
+        }
+      })
+      .then((data) => {
+        displayRecipes(data)
+      })
+      .catch((error) => console.error("FETCH ERROR:", error))
+    break     
 }
 
 function displayRecipes(data) {
